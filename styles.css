@@ -270,6 +270,7 @@ body {
 
 .story-body p {
   font-family: 'IM Fell English', serif;
+  font-feature-settings: "liga" 0, "calt" 0;
   font-size: clamp(11px, 1.4vw, 13.5px);
   line-height: 1.85;
   color: var(--ink);
