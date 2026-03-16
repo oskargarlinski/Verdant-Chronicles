@@ -1,5 +1,5 @@
 const archibald = [
-  // Spread 1 — Character card + backstory
+  // Spread 1 - Character card + backstory
   {
     left: `
       <div class="char-name">Archibald</div>
@@ -16,11 +16,11 @@ const archibald = [
     right: `
       <div class="story-heading">Templar Chaplain of Anelon</div>
       <div class="story-body">
-        <p>Archibald was never meant to be a fighter. As a boy he was handed to the church — bright, attentive, and pious enough that the priests saw in him the makings of a cleric. He learned scripture, tended the sick, and studied the divine with the quiet diligence of someone who genuinely believed. For a long time, that was enough.</p>
-        <p>It was during a royal ceremony in Anelon that everything changed. Among the retinue of King Galan Farric stood a Templar — resplendent in the colours of the crown. Archibald watched him and felt something shift. Here was a man who knelt before God and before his king in the same breath. He pestered the man until he agreed to train him. It took years. Eventually he earned his place as Chaplain — not as a full knight, but the man who walks into battle alongside the warriors and comes home to sit at the king's table.</p>
-        <p>He was not King Galan's closest advisor — there were lords and generals who held that distinction — but he had the king's ear when it mattered. Summoned when honesty was needed over politics. Galan Farric was a man worth serving. Archibald's loyalty was not to the crown as an object. It was to the man wearing it.</p>
+        <p>Archibald was never meant to be a fighter. As a boy he was handed to the church - bright, attentive, and pious enough that the priests saw in him the makings of a cleric. He learned scripture, tended the sick, and studied the divine with the quiet diligence of someone who genuinely believed. For a long time, that was enough.</p>
+        <p>It was during a royal ceremony in Anelon that everything changed. Among the retinue of King Galan Farric stood a Templar - resplendent in the colours of the crown. Archibald watched him and felt something shift. Here was a man who knelt before God and before his king in the same breath. He pestered the man until he agreed to train him. It took years. Eventually he earned his place as Chaplain - not as a full knight, but the man who walks into battle alongside the warriors and comes home to sit at the king's table.</p>
+        <p>He was not King Galan's closest advisor - there were lords and generals who held that distinction - but he had the king's ear when it mattered. Summoned when honesty was needed over politics. Galan Farric was a man worth serving. Archibald's loyalty was not to the crown as an object. It was to the man wearing it.</p>
         <div class="story-rule"><hr><span>✦</span><hr></div>
-        <p>He had been sent from Anelon on the king's business when it happened. When he returned, the city was <em>sleeping</em> — vast mushrooms erupted through stone and timber, spores drifting in golden clouds. He pressed in as far as he dared before the slumber began to pull at him, then turned back. He is going to wake his king. He just needs to find that train.</p>
+        <p>He had been sent from Anelon on the king's business when it happened. When he returned, the city was <em>sleeping</em> - vast mushrooms erupted through stone and timber, spores drifting in golden clouds. He pressed in as far as he dared before the slumber began to pull at him, then turned back. He is going to wake his king. He just needs to find that train.</p>
       </div>`
   }
 ];
