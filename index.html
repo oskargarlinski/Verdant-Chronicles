@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Verdant Chronicles</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="characters/halden.js"></script>
+  <script src="characters/archibald.js"></script>
+  <script src="manifest.js"></script>
+</head>
+
+<body>
+
+  <div class="header-label">The Verdant Chronicles</div>
+  <div class="book-scene">
+    <div class="book" id="book">
+      <div class="page page-left" id="pageLeft"></div>
+      <div class="spine"></div>
+      <div class="page page-right" id="pageRight"></div>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="nav-btn" id="btnPrev" onclick="flipBack()">← Prev</button>
+    <span class="nav-indicator" id="indicator"></span>
+    <button class="nav-btn" id="btnNext" onclick="flipFwd()">Next →</button>
+  </div>
+
+  <script>
+    const coverSpread = {
+      left: `<div class="page-inner" style="background:linear-gradient(135deg,#f5edd5,#ebe0c2);display:flex;align-items:center;justify-content:center;">
+    <div class="inside-deco">
+      <span class="ilabel">Est. Eldraheim</span>
+      <div class="emblem">⚜</div>
+      <div class="note">Property of the<br>Verdant Express<br>Field Operations Division</div>
+    </div>
+  </div>`,
+      right: `<div class="cover-page">
+    <div class="cover-ornament">⸻ ✦ ⸻</div><br>
+    <div class="cover-title">The Verdant<br>Chronicles</div>
+    <hr class="cover-rule">
+    <div class="cover-sub">Field Notes &amp; Fallen Companions<br>of the Verdant Line</div><br>
+    <div class="cover-ornament">⸻ ✦ ⸻</div>
+    <div style="position:absolute;bottom:22px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:#c49a2a44;text-transform:uppercase;">Eldraheim Field Registry</div>
+  </div>`
+    };
+
+    const endSpread = {
+      left: `<div class="page-inner" style="background:linear-gradient(to right,#ddd0a8,#f0e6c8);">
+    <div class="end-inner">
+      <div class="elabel">Field Registry</div>
+      <div class="ornament">✦</div>
+      <div class="note">More pages await.<br>More roads to travel.</div>
+      <div class="elabel" style="margin-top:8px;">— The Chronicle Continues —</div>
+    </div>
+  </div>`,
+      right: `<div class="cover-page">
+    <div style="text-align:center;opacity:0.4;">
+      <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;color:#c49a2a;text-transform:uppercase;line-height:3.2;">
+        Aegis Delveworks<br>Verdant Express<br>Eldraheim Field Registry
+      </div>
+      <div style="font-size:28px;color:#c49a2a;margin:6px 0;">⚜</div>
+      <div style="font-family:'Caveat',cursive;font-size:12px;color:#c49a2a;margin-top:6px;line-height:1.8;">All records herein are property<br>of the Verdant Express</div>
+    </div>
+  </div>`
+    };
+
+    function buildSpreads() {
+      const all = [coverSpread];
+      let pageNum = 2;
+      for (const char of manifest.characters) {
+        for (const spread of char) {
+          all.push({
+            left: `<div class="page-inner" style="background:linear-gradient(to right,#ddd0a8,#f0e6c8);">${spread.left}<span class="pg-num">${toRoman(pageNum)}</span></div>`,
+            right: `<div class="page-inner" style="background:linear-gradient(to left,#ddd0a8,#f0e6c8);">${spread.right}<span class="pg-num pg-num-right">${toRoman(pageNum + 1)}</span></div>`
+          });
+          pageNum += 2;
+        }
+      }
+      all.push(endSpread);
+      return all;
+    }
+
+    function toRoman(n) {
+      const v = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+      const s = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+      let r = '';
+      for (let i = 0; i < v.length; i++) while (n >= v[i]) { r += s[i]; n -= v[i]; }
+      return r;
+    }
+
+    const S = buildSpreads();
+    let cur = 0, busy = false;
+
+    function render() {
+      document.getElementById('pageLeft').innerHTML = S[cur].left;
+      document.getElementById('pageRight').innerHTML = S[cur].right;
+      addEdgeZones(); updateNav();
+    }
+
+    function addEdgeZones() {
+      const pr = document.getElementById('pageRight');
+      const pl = document.getElementById('pageLeft');
+      const er = document.createElement('div');
+      er.className = 'edge-zone edge-zone-right'; er.onclick = flipFwd; pr.appendChild(er);
+      const el = document.createElement('div');
+      el.className = 'edge-zone edge-zone-left'; el.onclick = flipBack; pl.appendChild(el);
+    }
+
+    function updateNav() {
+      document.getElementById('btnPrev').disabled = cur === 0;
+      document.getElementById('btnNext').disabled = cur === S.length - 1;
+      document.getElementById('indicator').textContent = (cur + 1) + ' / ' + S.length;
+    }
+
+    function flipFwd() {
+      if (busy || cur >= S.length - 1) return; busy = true;
+      const book = document.getElementById('book');
+      document.getElementById('pageLeft').innerHTML = S[cur + 1].left;
+      document.getElementById('pageRight').innerHTML = S[cur + 1].right;
+      const t = document.createElement('div'); t.className = 'turning turning-right'; t.style.transform = 'rotateY(0deg)';
+      const f = document.createElement('div'); f.className = 't-face t-face-front';
+      f.style.background = 'linear-gradient(to left,#ddd0a8,#f0e6c8)'; f.innerHTML = S[cur].right;
+      const b = document.createElement('div'); b.className = 't-face t-face-back';
+      b.style.background = 'linear-gradient(to right,#ddd0a8,#f0e6c8)'; b.innerHTML = S[cur + 1].left;
+      t.appendChild(f); t.appendChild(b); book.appendChild(t);
+      requestAnimationFrame(() => requestAnimationFrame(() => { t.style.transform = 'rotateY(-180deg)'; }));
+      t.addEventListener('transitionend', () => { t.remove(); cur++; addEdgeZones(); updateNav(); busy = false; }, { once: true });
+    }
+
+    function flipBack() {
+      if (busy || cur <= 0) return; busy = true;
+      const book = document.getElementById('book');
+      document.getElementById('pageLeft').innerHTML = S[cur - 1].left;
+      document.getElementById('pageRight').innerHTML = S[cur - 1].right;
+      const t = document.createElement('div'); t.className = 'turning turning-left'; t.style.transform = 'rotateY(0deg)';
+      const f = document.createElement('div'); f.className = 't-face t-face-front';
+      f.style.background = 'linear-gradient(to right,#ddd0a8,#f0e6c8)'; f.innerHTML = S[cur].left;
+      const b = document.createElement('div'); b.className = 't-face t-face-back';
+      b.style.background = 'linear-gradient(to left,#ddd0a8,#f0e6c8)'; b.style.transform = 'rotateY(-180deg)'; b.innerHTML = S[cur - 1].right;
+      t.appendChild(f); t.appendChild(b); book.appendChild(t);
+      requestAnimationFrame(() => requestAnimationFrame(() => { t.style.transform = 'rotateY(180deg)'; }));
+      t.addEventListener('transitionend', () => { t.remove(); cur--; addEdgeZones(); updateNav(); busy = false; }, { once: true });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') flipFwd();
+      if (e.key === 'ArrowLeft') flipBack();
+    });
+
+    render();
+  </script>
+</body>
+
+</html>
