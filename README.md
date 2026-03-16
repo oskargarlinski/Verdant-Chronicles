@@ -1,6 +1,6 @@
 # The Verdant Chronicles
 
-A character portfolio for a D&D 5e campaign, presented as a flippable journal. Each character gets their own spread of pages — a stat card, a backstory, and whatever notes feel right. Built so that adding a new character only requires creating one new file.
+A character portfolio for a D&D 5e campaign, presented as a flippable journal. Each character gets their own spread of pages - a stat card, a backstory, and whatever notes feel right. Built so that adding a new character only requires creating one new file.
 
 ## Structure
 
